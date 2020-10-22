@@ -140,7 +140,7 @@ export class OIDCProvider implements OAuthHandlers {
     const { profile } = response;
 
     if (!profile.email) {
-      throw new Error('Okta profile contained no email');
+      throw new Error('OIDC profile contained no email');
     }
 
     // TODO(Rugvip): Hardcoded to the local part of the email for now
@@ -150,23 +150,23 @@ export class OIDCProvider implements OAuthHandlers {
   }
 }
 
-export const createOktaProvider: AuthProviderFactory = ({
+export const createOIDCProvider: AuthProviderFactory = ({
   globalConfig,
   config,
   tokenIssuer,
 }) =>
   OAuthEnvironmentHandler.mapConfig(config, envConfig => {
-    const providerId = 'okta';
+    const providerId = 'oidc';
     const clientId = envConfig.getString('clientId');
     const clientSecret = envConfig.getString('clientSecret');
-    const audience = envConfig.getString('audience');
+    const issuer = envConfig.getString('issuer');
     const callbackUrl = `${globalConfig.baseUrl}/${providerId}/handler/frame`;
 
-    const provider = new OktaAuthProvider({
-      audience,
+    const provider = new OIDCProvider({
       clientId,
       clientSecret,
       callbackUrl,
+      issuer,
     });
 
     return OAuthAdapter.fromConfig(globalConfig, provider, {
