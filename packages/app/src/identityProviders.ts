@@ -21,6 +21,7 @@ import {
   githubAuthApiRef,
   samlAuthApiRef,
   microsoftAuthApiRef,
+  oidcAuthApiRef,
 } from '@backstage/core';
 
 export const providers = [
@@ -59,5 +60,11 @@ export const providers = [
     title: 'SAML',
     message: 'Sign In using SAML',
     apiRef: samlAuthApiRef,
+  },
+  {
+    id: 'oidc-auth-provider',
+    title: 'OIDC',
+    message: 'Sign In using OIDC',
+    apiRef: oidcAuthApiRef,
   },
 ];

@@ -225,6 +225,14 @@ auth:
           $env: AUTH_MICROSOFT_CLIENT_SECRET
         tenantId:
           $env: AUTH_MICROSOFT_TENANT_ID
+    oidc:
+      development:
+        clientId:
+          $env: AUTH_OIDC_CLIENT_ID
+        clientSecret:
+          $env: AUTH_OIDC_CLIENT_SECRET
+        issuer:
+          $env: AUTH_OIDC_ISSUER
 costInsights:
   engineerCost: 200000
   products:

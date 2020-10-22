@@ -27,6 +27,7 @@ import {
   GithubAuth,
   OAuth2,
   OktaAuth,
+  OIDCAuth,
   GitlabAuth,
   Auth0Auth,
   MicrosoftAuth,
@@ -46,7 +47,9 @@ import {
   UrlPatternDiscovery,
   samlAuthApiRef,
   SamlAuth,
+  oidcAuthApiRef,
 } from '@backstage/core-api';
+import { createOIDCProvider } from '@backstage/plugin-auth-backend/src/providers/oidc';
 
 export const defaultApis = [
   createApiFactory({
@@ -144,5 +147,14 @@ export const defaultApis = [
       discoveryApi: discoveryApiRef,
     },
     factory: ({ discoveryApi }) => SamlAuth.create({ discoveryApi }),
+  }),
+  createApiFactory({
+    api: oidcAuthApiRef,
+    deps: {
+      discoveryApi: discoveryApiRef,
+      oauthRequestApi: oauthRequestApiRef,
+    },
+    factory: ({ discoveryApi, oauthRequestApi }) =>
+      OIDC.create({ discoveryApi, oauthRequestApi }),
   }),
 ];
